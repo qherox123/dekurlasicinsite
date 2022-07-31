@@ -1,0 +1,185 @@
+
+<%- include('ek/header', {bot, user, path}) %>
+<script type="text/javascript">
+var title = "Astarius Code";
+document.title = title;
+</script> 
+<div class="container is-fullhd">
+	<% if(bot.ayar.fetch(`botlar.${id}.sahipid`) === user.id) { %>
+ <form method="post">
+				
+   <div class="jumbotron">
+     <h2 style="color: #333;text-align:center;">Bot Editing</h2>
+		<label><i aria-hidden="true"></i>Bot Prefix <a style="color:red">*</a></label>
+      <input type="text" name="botprefix" id="botprefix" value="<%=bot.ayar.fetch(`botlar.${id}.prefix`)%>" required="required">
+     
+     <label><i aria-hidden="true"></i>Library<a style="color:red">*</a></label>
+     <select id="kutuphane" name="kutuphane" required="required">
+       <option value="<%=bot.ayar.fetch(`botlar.${id}.kutuphane`)%>" selected><%=bot.ayar.fetch(`botlar.${id}.kutuphane`)%></option>
+       <option value="discordcr" >discordcr</option>
+        
+          <option value="Nyxx" >Nyxx</option>
+        
+          <option value="Discord.Net" >Discord.Net</option>
+        
+          <option value="DSharpPlus" >DSharpPlus</option>
+        
+          <option value="Nostrum" >Nostrum</option>
+        
+          <option value="coxir" >coxir</option>
+        
+          <option value="DiscordGo" >DiscordGo</option>
+        
+          <option value="Discord4J" >Discord4J</option>
+        
+          <option value="Javacord" >Javacord</option>
+        
+          <option value="JDA" >JDA</option>
+        
+          <option value="discord.js" >discord.js</option>
+        
+          <option value="Eris" >Eris</option>
+        
+          <option value="Discordia" >Discordia</option>
+        
+          <option value="RestCord" >RestCord</option>
+        
+          <option value="Yasmin" >Yasmin</option>
+        
+          <option value="disco" >disco</option>
+        
+          <option value="discord.py" >discord.py</option>
+        
+          <option value="discordrb" >discordrb</option>
+        
+          <option value="serenity" >serenity</option>
+        
+          <option value="SwiftDiscord" >SwiftDiscord</option>
+        
+          <option value="Sword" >Sword</option>
+        
+        <option value="Other" >Other</option>
+     </select>
+     
+     <label><i aria-hidden="true"></i>Bot Owner ID <a style="color:red">*</a></label>
+     <input type="text" name="sahip" id="sahip" value="<%=user.id%>" disabled>
+     
+     <label><i aria-hidden="true"></i>Short Description <a style="color:red">*</a></label>
+      <input type="text" name="kisa-aciklama" id="kisa-aciklama"value="<%=bot.ayar.fetch(`botlar.${id}.kisaaciklama`)%>" maxlength="30" required="required">
+     <br>
+     <label><i aria-hidden="true"></i>Long Description <a style="color:red">*</a></label>
+      <% var xx %>
+<% for (var ii = 0; ii < bot.tags.length; ii++) { %>
+  <% if(bot.ayar.fetch(`botlar.${id}.uzunaciklama`).includes(bot.tags[ii]) === false) {%>
+    <% xx = false %>
+ <% } %>
+    <% if (bot.ayar.fetch(`botlar.${id}.uzunaciklama`).includes(bot.tags[ii]) === true) { %>
+     <% x = true %>
+    <% } %>
+<% } %>
+      
+        <!--<pre style="height:150px; background-color:#222; color:#fff;" name="uzun-aciklama" id="uzun-aciklama"><code>
+        <%= //bot.ayar.fetch(`${id}.uzunaciklama`) %>
+        </code></pre>-->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+     <script>
+var simplemde = new SimpleMDE({ element: document.getElementById("uzun-aciklama") }); 
+     </script>
+     
+      <textarea name="uzun-aciklama" id="uzun-aciklama" value="<%=bot.ayar.fetch(`${id}.uzunaciklama`)%>" required="required">      
+        <%= bot.ayar.fetch(`botlar.${id}.uzunaciklama`) %>
+      </textarea>
+     <br>
+     <label><i aria-hidden="true"></i>Tags <a style="color:red">*</a></label>
+      <select multiple id="etikett" name="etikett">
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Moderation')) { %>
+        <option value="Moderation" selected>Moderation</option>
+        <% } else { %>
+        <option value="Moderation">Moderation</option>
+        <% } %>
+        
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Music')) { %>
+        <option value="Music" selected>Music</option>
+        <% } else { %>
+        <option value="Music">Music</option>
+        <% } %>
+        
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Settings')) { %>
+        <option value="Settings" selected>Settings</option>
+        <% } else { %>
+        <option value="Settings">Settings</option>
+        <% } %>
+        
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Fun')) { %>
+        <option value="Fun" selected>Fun</option>
+        <% } else { %>
+        <option value="Fun">Fun</option>
+        <% } %>
+        
+                <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('NSFW')) { %>
+        <option value="NSFW" selected>NSFW</option>
+        <% } else { %>
+        <option value="NSFW">NSFW</option>
+        <% } %>
+        
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Backup')) { %>
+        <option value="Backup" selected>BACKUP</option>
+        <% } else { %>
+        <option value="Backup">BACKUP</option>
+        <% } %>
+        
+        <% if(bot.ayar.fetch(`botlar.${id}.etiket`).includes('Web Panel')) { %>
+        <option value="Web Panel" selected>Web Panel</option>
+        <% } else { %>
+        <option value="Web Panel">Web Panel</option>
+        <% } %>
+       </select>
+       <p>
+<a style="color:red"> Note: </a> <a style="color:#333"> multiple tags can be selected. If you are on the computer, hold down the <i> ctrl </i> key and select tags. </a>
+       </p>
+     <br>
+     <label><i aria-hidden="true"></i>Website (Optional)</label>
+		<% if(!bot.ayar.has(`botlar.${id}.site`)) { %>
+      <input type="url" style="text-align: center;" name="botsite" id="botsite"
+                placeholder="">
+                <% } else { %>
+                    <input type="url" style="text-align: center;" name="botsite" id="botsite"
+                value="<%=bot.ayar.fetch(`botlar.${id}.site`)%>">
+                <% } %>
+     <br>
+     <label><i aria-hidden="true"></i>Github (Optional)</label>
+      <% if(!bot.ayar.has(`botlar.${id}.github`)) { %>
+      <input type="url" style="text-align: center;" name="github" id="github"
+                placeholder="">
+                <% } else { %>
+                    <input type="url" style="text-align: center;" name="github" id="github"
+                value="<%=bot.ayar.fetch(`botlar.${id}.github`)%>">
+                <% } %>
+     <br>
+     <label><i aria-hidden="true"></i>Support Server (Optional)</label>
+      <% if(!bot.ayar.has(`botlar.${id}.destek`)) { %>
+      <input type="url" style="text-align: center;" name="botdestek" id="botdestek"
+                placeholder="">
+                <% } else { %>
+                    <input type="url" style="text-align: center;" name="botdestek" id="botdestek"
+                value="<%=bot.ayar.fetch(`botlar.${id}.destek`)%>">
+                <% } %>
+   
+   
+   <h6 style="color:red">
+   </h6>
+
+					<button type="submit" class="butonss"><i class="fa fa-save fa-fw"></i> Edit<i aria-hidden='true'></i></button>
+   </div>
+			</form>
+			<% } else { %>
+			<div class="jumbotron">
+
+  </div>
+			<% } %>
+		</div>
+	</div>
+</div>
+</div>
+<% include ./ek/footer %>

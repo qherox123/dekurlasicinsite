@@ -1,0 +1,166 @@
+<%- include('ek/header', {bot, user, path}) %>
+<script type="text/javascript">
+var title = "Astarius Code";
+document.title = title;
+document.getElementById("botlar").classList.add('active');
+</script>
+<div class="container">
+
+<h3 align="center" style="color:#fff">
+    <strong>All Bots
+    </strong></h3>
+  <h6 align="center" style="color:#fff">
+    <strong>The bots are sorted according to the votes.
+    </strong></h6>
+  <br>
+  <br><br><br>
+  <style>
+    .kutucuk {
+      background-color: #7289DA;
+      width: 350px;
+      padding: 30px;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      margin-right: 10px;
+      display: inline-block;
+    }
+        .kutucuk2 {
+      background-color: #7289EA;
+      width: 400px;
+      padding: 30px;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    .roxzaninresmi{
+      border-radius: 10px;
+    }
+    .roxzatextler{
+      font-size: 45px;
+    }
+    .roxzatext{
+      font-size: 35px;
+      overflow: hidden;
+      text-overflow: visible;
+      color: #222;
+      padding: 8px;
+      border-radius: 2px;
+      user-select:none;
+    }
+     .sertifika{
+      border-radius: 10px;
+    }
+  </style>
+  
+  <style type="text/css">
+.alonebutton {
+	background-color:#525453;
+	-webkit-border-top-left-radius:28px;
+	-moz-border-radius-topleft:28px;
+	border-top-left-radius:28px;
+	-webkit-border-top-right-radius:28px;
+	-moz-border-radius-topright:28px;
+	border-top-right-radius:28px;
+	-webkit-border-bottom-right-radius:28px;
+	-moz-border-radius-bottomright:28px;
+	border-bottom-right-radius:28px;
+	-webkit-border-bottom-left-radius:28px;
+	-moz-border-radius-bottomleft:28px;
+	border-bottom-left-radius:28px;
+text-indent:0;
+	border:1px solid #303830;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+height:50px;
+	line-height:50px;
+width:140px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #525453;
+}.alonebutton:hover {
+	background-color:#525453;
+  color: gray;
+}.alonebutton:active {
+	position:relative;
+	top:1px;
+}</style>
+  
+   <% if (bot.ayar.has('botlar')) { %>
+  <%for(var i = 0; i < 10; i++) { %>
+ <% const sorted = Object.keys(bot.ayar.fetch('botlar')).sort((a, b) => { return (bot.ayar.fetch(`botlar.${b}.oy`) || 0) - (bot.ayar.fetch(`botlar.${a}.oy`) || 0) }) %>
+  <% const top = sorted.splice(0, Object.keys(bot.ayar.fetch('botlar')).length) %>
+  <% const map = top.map(x=>x) %>
+	<% for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) { %>
+  <% let idd = map[i] %>
+   <% if(bot.ayar.has(`botlar.${idd}.durum`) === true) { %>
+		<% if (bot.ayar.fetch(`botlar.${idd}.durum`) === "Onaylı") { %>
+  <div class="kutucuk">
+    <div class="row no-gutters">
+        <div class="col-md-5">
+          
+        <img data-toggle="tooltip" data-placement="bottom"  title="<%=bot.useful.seg(bot.ayar.fetch(`botlar.${idd}.isim`), 5)%>" src="<%=bot.ayar.fetch(`botlar.${idd}.avatar`)%>" class="card-img-top h-100" style="border-radius: 50%;width: 120px;height: 120px !important;margin: 14px" alt="..." onerror="this.onerror=null;this.src='https://cdn.discordapp.com/attachments/415626207607128076/526891779992322078/sunucuicon.png'">
+        </div>
+        <div class="col-md-7">
+            <div class="card-body">
+            
+
+                      <h5 class="card-title"><%=bot.useful.seg(bot.ayar.fetch(`botlar.${idd}.isim`), 5)%></h5>
+              <h6 class="text-white"><%=bot.ayar.fetch(`botlar.${idd}.kisaaciklama`)%></h6>
+
+            </div>
+        </div>
+      
+    </div>
+       <div class="btn-group">
+        <a class="alonebutton" href="https://discordapp.com/oauth2/authorize?client_id=<%=idd%>&scope=bot&permissions=8"><i class="fa fa-link mr-2"></i> Invite</a>
+        </div>
+           <div class="btn-group">
+               <a class="alonebutton" href="/bot/<%=idd%>"><i class="fa fa-eye mr-2"></i> View</a>
+            </div>
+</div>
+      <% } %>
+    <% } %>
+   <% } %>
+   <% } %>
+  <nav class="pagination is-centered has-text-white mt-5">
+<ul class="pagination-list has-text-white">
+<li><a class="pagination-link has-text-white is-current" href="/bots?page=2"><i class="fa fa-angle-right"></i></a></li>
+</ul>
+</nav>
+   <% } else {%>
+   <center><h5 style="color:#222">
+     Sistemde hiç bot bulunmuyor.
+     </h5></center>
+   <% } %>
+   </div>
+
+</div></div></div>
+
+<script>
+$(document).ready(function(){
+ $("#ara").keyup(function(){
+    var value = $(this).val().toLowerCase();
+    $(".col-12, .col-sm-6, .col-md-4 .card").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+  //etiket filtresi
+  $("#etiketselect").change(function(){
+    var value = $(this).val();
+    if (value === 'noneFilter') {
+      window.location.reload(true);
+      return
+    }
+    $(".col-12, .col-sm-6, .col-md-4 .card").filter(function(){
+      $(this).toggle($(this).text().indexOf(value) > -1)
+    });
+  })
+  ;
+});
+</script>
+  
+<% include ./ek/footer %>

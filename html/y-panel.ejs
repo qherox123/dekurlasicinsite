@@ -1,0 +1,257 @@
+<%- include('ek/header', {bot, user, path}) %>
+
+<script type="text/javascript">
+var title = "Astarius - Admin Panel";
+document.title = title;
+document.getElementById("yetkili").classList.add('active');
+</script>
+
+<div class="container">
+	<div class="jumbotron">
+		<div align="center">
+      <style>
+          .adminpanel {
+      background-color: #fff;
+      width: 300px;
+      padding: 30px;
+      padding: 25px;
+      border-radius: 10px;
+    }
+        .admin-buton{
+	background-color:#525453;
+	-webkit-border-top-left-radius:28px;
+	-moz-border-radius-topleft:28px;
+	border-top-left-radius:28px;
+	-webkit-border-top-right-radius:28px;
+	-moz-border-radius-topright:28px;
+	border-top-right-radius:28px;
+	-webkit-border-bottom-right-radius:28px;
+	-moz-border-radius-bottomright:28px;
+	border-bottom-right-radius:28px;
+	-webkit-border-bottom-left-radius:28px;
+	-moz-border-radius-bottomleft:28px;
+	border-bottom-left-radius:28px;
+text-indent:0;
+	border:1px solid #303830;
+	display:inline-block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+height:50px;
+	line-height:50px;
+width:140px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #525453;
+}.admin-panel:hover {
+	background-color:#525453;
+  color: gray;
+}.admin-panel:active {
+	position:relative;
+	top:1px;
+}
+        }
+    </style>
+<% if (bot.ayar.has('botlar')) { %>
+      <div class="adminpanel"><h3>
+        There are <%=Object.keys(bot.ayar.fetch('botlar')).length;%> bots on the site!</div></h3>
+      </div>
+      <br>
+<!-- Tüm Botlar -->
+<a class="btn btn-default" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-toggle="collapse" data-target="#tum">All Bots</a>
+<div id="tum" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+<table class="table" style="background-color:#333">
+<tr>
+<th>Bot Adı</th>
+<th>Bot ID</th>
+<th>Bot Prefix</th>
+<th>Sahip</th>
+<th>Sahip ID</th>
+<th>Durum</th>
+</tr>
+
+<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+
+<td scope="row"><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.sahipid`)%></td>
+<td><%=bot.ayar.has(`botlar.${id}.durum`) ? bot.ayar.fetch(`botlar.${id}.durum`) : 'Beklemede'%></td>
+</tr>
+<% } %>
+
+</table>
+  </div></div>
+<br><br>
+
+<!-- Beklemede olan botlar -->
+<a class="btn btn-default" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-toggle="collapse" data-target="#onaybekleyen">Waiting Bots</a>
+<div id="onaybekleyen" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+<table class="table" style="background-color:#333">
+<tr>
+		<th>Operation</th>
+		<th>Name</th>
+		<th>Bot ID</th>
+    <th>Owner</th>
+<th style="width:10%;">Prefix</th>
+</tr>
+
+<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+<% if (bot.ayar.fetch(`botlar.${id}.durum`) === 'Beklemede' || bot.ayar.has(`botlar.${id}.durum`) === false) { %>
+<tr>
+<td><a class="btn btn-dark" href="/botyonetici/onayla/<%=id%>">Aporve<i aria-hidden="true"></i></a>
+<a class="btn btn-dark" href="/botyonetici/reddet/<%=id%>">Decline<i aria-hidden="true"></i></a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=0">Invite (Perm: 0)</a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=8">Invite (Perm: 8)</a></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+</tr>
+<% } %>
+<%}%>
+</table>
+</div>
+</div>
+  <br><br>
+
+<!-- Onaylanmış Botlar -->
+<a class="btn btn-default" data-toggle="collapse" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-target="#onaylı">Apporved Bots</a>
+<div id="onaylı" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+		<table class="table" style="background-color:#333">
+		<tr>
+		<th>Operation</th>
+		<th>Name</th>
+		<th>Bot ID</th>
+    <th>Owner</th>
+		<th>Bot Prefix</th>
+		</tr>	
+      
+		<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+		<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+		<% if (bot.ayar.fetch(`botlar.${id}.durum`) === 'Onaylı') { %>
+	  <tr>
+<td><a class="btn btn-success" href="/botyonetici/sertifikaver/<%=id%>">Give Certificate<i aria-hidden="true"></i></a>
+<td><a class="btn btn-dark" href="/botyonetici/onayla/<%=id%>">Aporve<i aria-hidden="true"></i></a>
+<a class="btn btn-dark" href="/botyonetici/reddet/<%=id%>">Decline<i aria-hidden="true"></i></a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=0">Invite (Perm: 0)</a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=8">Invite (Perm: 8)</a></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+    <td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+		</tr>
+		<% } %>
+		<%}%>
+		</table>
+		</div>
+</div>
+  <br><br>
+
+<!-- Reddedilmiş Botlar -->
+<a class="btn btn-default" data-toggle="collapse" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-target="#onaysız">Rejected Bots</a>
+<div id="onaysız" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+		<table class="table" style="background-color:#333">
+		<tr>
+		<th>Operation</th>
+		<th>Name</th>
+		<th>Bot ID</th>
+    <th>Owner</th>
+		<th style="width:10%;">Bot Prefix</th>
+		</tr>	
+		<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+		<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+		<% if (bot.ayar.fetch(`botlar.${id}.durum`) === 'Reddedilmiş') { %>
+		<tr>
+    		<td><a class="btn btn-danger" href="/botyonetici/botsil/<%=id%>">Delete Bot<i aria-hidden="true"></i></a>
+    </td>
+      <td><a class="btn btn-dark" href="/botyonetici/onayla/<%=id%>">Aporve<i aria-hidden="true"></i></a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=0">Invite (Perm: 0)</a>
+<a class="btn btn-dark" href="https://discordapp.com/oauth2/authorize?client_id=<%=id%>&scope=bot&permissions=8">Invite (Perm: 8)</a></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+    <td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+		</tr>
+		<% } %>
+		<%}%>
+		</table>
+		</div>
+</div>
+  <br><br>
+
+       <!-- Sertifika sil bölümü -->
+<a class="btn btn-default" data-toggle="collapse" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-target="#sertifikaiptal">Delete Certificate</a>
+<div id="sertifikaiptal" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+		<table class="table" style="background-color:#333">
+		<tr>
+		<th>Operation</th>
+		<th>Name</th>
+		<th>Bot ID</th>
+    <th>Owner</th>
+		<th style="width:10%;">Bot Prefix</th>
+		</tr>	
+		<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+		<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+		<% if (bot.ayar.fetch(`botlar.${id}.sertifika`)) { %>
+		<tr>
+		<td><a class="btn btn-danger" href="/botyonetici/sertifikasil/<%=id%>">Delete Certificate<i aria-hidden="true"></i></a></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+    <td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+		</tr>
+		<% } %>
+		<%}%>
+		</table>
+		</div>
+</div><br><br>
+    <!-- Bot Silme Bölümü-->
+<a class="btn btn-default" data-toggle="collapse" style="background-color: #fff;color: #222;width: 100%;border: 1px solid #ddd;margin-bottom: 5px;font-size: 18px;border-radius: 2px;" data-target="#botsil">Delete Bot</a>
+<div id="botsil" class="collapse in">
+<div style="overflow-x:auto;width: 100%;font-size: 15px;">
+		<table class="table" style="background-color:#333">
+		<tr>
+		<th>İşlem</th>
+		<th>Bot Adı</th>
+		<th>Bot ID</th>
+    <th>Sahip</th>
+		<th>Bot Prefix</th>
+		</tr>	
+      
+		<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+		<% let id = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+	  <tr>
+		<td><a class="btn btn-danger" href="/botyonetici/botsil/<%=id%>">Delete Bot<i aria-hidden="true"></i></a>
+    </td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.isim`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.id`)%></td>
+    <td><%=bot.ayar.fetch(`botlar.${id}.sahip`)%></td>
+		<td><%=bot.ayar.fetch(`botlar.${id}.prefix`)%></td>
+		</tr>
+		<%}%>
+		</table>
+		</div>
+</div>
+  <br><br>
+<% } else {%>
+<h5 style="color:#fff">
+Sistemde hiç bot bulunmuyor.
+</h5>
+<% } %>
+
+</div>
+</div>
+</div>
+</div></div><div></div>
+<% include ./ek/footer %>%>

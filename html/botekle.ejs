@@ -1,0 +1,122 @@
+<%- include('ek/header', {bot, user, path}) %>
+<script type="text/javascript">
+var title = "Astarius Code";
+document.title = title;
+document.getElementById("botekle").classList.add('active');
+</script>
+<div class="container is-fullhd">
+  <style>
+    .yazii{
+      color: white;
+    }
+    </style>
+ <form method="post">	
+   <div class="yazii">
+     <h2 style="color: #fff;text-align:center;">Add Bot</h2>
+     <br>
+		<label><i aria-hidden="true"></i>Client ID <a style="color:red">*</a></label>
+      <input type="text" name="botid" id="botid" placeholder="<%=bot.user.id%>" required="required">
+   <br>
+    <label><i aria-hidden="true"></i>Bot Owner ID<a style="color:red">*</a></label>
+     <input type="text" name="sahip" id="sahip"value="<%=user.id%>" disabled>
+     
+		<label><i aria-hidden="true"></i>Bot Prefix <a style="color:red">*</a></label>
+      <input type="text" name="botprefix" id="botprefix"placeholder="!" required="required">
+     
+     <label><i aria-hidden="true"></i>Library<a style="color:red">*</a></label>
+     <select id="kutuphane" name="kutuphane" required="required">
+       <option disabled selected>Please select a library</option>
+       <option value="discordcr" >discordcr</option>
+        
+          <option value="Nyxx" >Nyxx</option>
+        
+          <option value="Discord.Net" >Discord.Net</option>
+        
+          <option value="DSharpPlus" >DSharpPlus</option>
+        
+          <option value="Nostrum" >Nostrum</option>
+        
+          <option value="coxir" >coxir</option>
+        
+          <option value="DiscordGo" >DiscordGo</option>
+        
+          <option value="Discord4J" >Discord4J</option>
+        
+          <option value="Javacord" >Javacord</option>
+        
+          <option value="JDA" >JDA</option>
+        
+          <option value="discord.js" >discord.js</option>
+        
+          <option value="Eris" >Eris</option>
+        
+          <option value="Discordia" >Discordia</option>
+        
+          <option value="RestCord" >RestCord</option>
+        
+          <option value="Yasmin" >Yasmin</option>
+        
+          <option value="disco" >disco</option>
+        
+          <option value="discord.py" >discord.py</option>
+        
+          <option value="discordrb" >discordrb</option>
+        
+          <option value="serenity" >serenity</option>
+        
+          <option value="SwiftDiscord" >SwiftDiscord</option>
+        
+          <option value="Sword" >Sword</option>
+        
+        <option value="Other" >Other</option>
+     </select>
+           
+     <label><i aria-hidden="true"></i>Short Description<a style="color:red">*</a></label>
+      <input type="text" name="kisa-aciklama" id="kisa-aciklama" placeholder="" maxlength="30" required="required">
+     <br>
+     <label><i aria-hidden="true"></i>Long Description<a style="color:red">*</a></label>
+           <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+     <script>
+var simplemde = new SimpleMDE({ element: document.getElementById("uzun-aciklama") }); 
+     </script>
+     <textarea name="uzun-aciklama" id="uzun-aciklama"placeholder="" maxlength="300" minlength="50" required="required"></textarea>
+     <br>
+     <label><i aria-hidden="true"></i>Tags <a style="color:red">*</a></label>
+      <select multiple id="etikett" name="etikett">
+        <option value="Moderation">Moderation</option>
+        <option value="Music">Music</option>
+        <option value="Settings">Settings</option>
+        <option value="Fun">Fun</option>
+        <option value="NSFW">Nsfw</option>
+        <option value="Backup">Backup</option>
+        <option value="Web Panel">Web Panel</option>
+       </select>
+       <p>
+<a style="color:red"> Note: </a> <a style="color:#fff"> multiple tags can be selected. If you are on the computer, hold down the <i> ctrl </i> key and select tags. </a>
+       </p>
+     <br>
+     <label><i aria-hidden="true"></i>Web Site URL (Optional)</label>
+      <input type="url" name="botsite" id="botsite" placeholder="">
+     <br>
+     <label><i aria-hidden="true"></i>Github URL (Optional)</label>
+      <input type="url" name="github" id="github" placeholder="">
+     <br>
+     <label><i aria-hidden="true"></i>Support Server URL (Optional)</label>
+      <input type="url" name="botdestek" id="botdestek" placeholder="">
+	
+   
+   <h6 style="color:red">
+   </h6>
+
+				<div style="width: 100%; text-align: center; margin-top: 20px;">
+					<button type="submit" class="butonss"><i class="fa fa-save fa-fw"></i>Submit<i aria-hidden='true'></i></button>
+				</div>
+   </div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<% include ./ek/footer %>
